@@ -1,3 +1,4 @@
 .ropeproject/
 .venv/
 pyrightconfig.json
+.DS_Store
