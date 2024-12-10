@@ -225,20 +225,12 @@ class EnemyBlob(AbstractBlob):
     def move_with_randomness(self, other: AbstractBlob, moving_towards: bool):
         direction_x = other.x - self.x if moving_towards else self.x - other.x
         direction_y = other.y - self.y if moving_towards else self.y - other.y
-        distance = self.safe_distance_to(other)
 
-        direction_x /= distance
-        direction_y /= distance
+        angle_to_other = math.atan2(direction_y, direction_x)
+        movement_angle = angle_to_other + random.uniform(-math.pi / 4, math.pi / 4)
 
-        angle_offset = random.uniform(-math.pi / 4, math.pi / 4)
-        cos_theta = math.cos(angle_offset)
-        sin_theta = math.sin(angle_offset)
-
-        random_x = cos_theta * direction_x - sin_theta * direction_y
-        random_y = sin_theta * direction_x + cos_theta * direction_y
-
-        self.x += self.movement_speed * random_x
-        self.y += self.movement_speed * random_y
+        self.x += math.cos(movement_angle) * self.movement_speed
+        self.y += math.sin(movement_angle) * self.movement_speed
 
 
 if __name__ == "__main__":
